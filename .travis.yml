@@ -1,0 +1,11 @@
+script:
+  - echo "this should succeed"; true
+  - echo "this should fail"; false
+  - echo "this shouldn't be executed"; true
+
+after_success:
+  - echo "after_success shouldn't be executed"; true
+
+deploy:
+  provider: script
+  script: echo "deploy shouldn't be executed; true"
