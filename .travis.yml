@@ -2,9 +2,14 @@ language: generic
 
 script:
   - echo "this should succeed"; true
+  - echo "this should fail"; false
+  - touch myfile; echo "this shouldn't be executed"; true
 
 after_success:
-  - echo "this should fail"; false
+  - echo "after_success shouldn't be executed"; true
+
+after_script:
+  - test -f myfile && echo "this sucks"; true
 
 deploy:
   provider: script
