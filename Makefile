@@ -1,28 +1,32 @@
-RED=\033[0;31m
-GREEN=\033[0;32m
-NC=\033[0m
+include travis.mk
 
-_%: # used to print a job's title
-	@printf "\n${GREEN}- Running '$*'${NC}\n"
-
-deps: _deps
+deps:
 	@echo "install some dependenices"
 	@echo "it also can include travis-specific commands"
 	@echo "(like apt-get install smth)"
 
-build: _build
+build:
 	@echo "build binaries if needed"
 
-test: _test
+test:
 	@echo "run some tests"
 
-image: _image
+image:
 	@echo "build a docker image"
 
-push: _push
+push:
 	@echo "push image to quay"
 
-deploy: _deploy
+deploy:
 	@echo "trigger jenkins job for deployment"
 
-travis: deps build test image push deploy
+ci: \
+	ci_deps \
+	ci_build \
+	ci_test \
+	\
+	ci_if_master_image \
+	ci_if_master_push \
+	ci_if_master_deploy
+
+
